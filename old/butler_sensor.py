@@ -99,7 +99,7 @@ class Mqtt():
         self._on_message = func
 
     def top_on_message(self, client, userdata, msg):
-        _LOGGER.debug('Message received: %s, payload: %s', msg.topic, msg.payload.decode('ascii'))
+        _LOGGER.debug('Message received: %s, payload: %s', msg.topic, msg.payload.decode('utf-8'))
         if self._on_message is not None:
             self._on_message(client, userdata, msg)
 
@@ -131,7 +131,7 @@ class Worker():
         t = msg.topic.rsplit('/', 2)
         verb = t[1]
         key = t[2]
-        value = msg.payload.decode('ascii')
+        value = msg.payload.decode('utf-8')
         if verb == 'set':
             self.set_config(key, value)
         if verb == 'cmd':
